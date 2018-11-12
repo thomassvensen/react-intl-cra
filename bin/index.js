@@ -5,11 +5,16 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const chalk = require('chalk');
+const yargs = require('yargs');
 const pkg = require('../package.json');
 const extract = require('../src/index');
 
 // CLI Arguments
-const { _: [pattern], outFile, babelPlugins } = require('yargs')
+const {
+  _: [pattern],
+  outFile,
+  babelPlugins,
+} = yargs
   .usage(
     `Usage: ${chalk.green('$0')} <pattern> [options]\n
 <pattern>\t Glob pattern to specify files.
@@ -55,8 +60,8 @@ const result = JSON.stringify(extract(pattern, babelPlugins), null, 2);
 if (outFile) {
   spawnSync('mkdir', ['-p', path.dirname(outFile)]);
   fs.writeFileSync(outFile, result);
+  // eslint-disable-next-line
   console.log(
-    // eslint-disable-line
     `${path.relative(process.cwd(), pattern)} -> ${path.relative(
       process.cwd(),
       outFile
