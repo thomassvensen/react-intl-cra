@@ -14,7 +14,7 @@ function extract(
   const relativeSrcPaths = glob.sync(pattern);
   const contents = srcPaths.map(p => [p, fs.readFileSync(p, 'utf-8')]);
   const reqBabelPlugins = babelPlugins.map(b =>
-    require.resolve(`babel-plugin-${b}`)
+    require.resolve(`@babel/plugin-${b}`)
   );
   const messages = contents
     .map(([filename, content]) =>
